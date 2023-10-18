@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo de Aventura</title>
+    <style>
+      body {
+        background-image: url("assets/best-total-war-warhammer-background-ti0t5ja7ol4canij.jpg");
+        background-size: cover;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+      }
+      h1,
+      p,
+      label,
+      input,
+      select,
+      button {
+        font-size: 1.5em;
+      }
+      .output {
+        color: rgb(249, 251, 252);
+        margin-top: 20px;
+      }
+      .buttons {
+        margin-top: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:last-child {
+        margin-right: 0;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Jogo de Aventura</h1>
+
+    <label for="nome">Nome:</label><br />
+    <input type="text" id="nome" required /><br />
+    <label for="idade">Idade:</label><br />
+    <input type="number" id="idade" min="1" required /><br />
+    <label for="tipo">Tipo:</label><br />
+    <select id="tipo" required>
+      <option value="">Selecione um tipo</option>
+      <option value="mago">Mago</option>
+      <option value="guerreiro">Guerreiro</option>
+      <option value="monge">Monge</option>
+      <option value="ninja">Ninja</option></select
+    ><br />
+
+    <div class="buttons">
+      <button onclick="executarAtaque()">Atacar</button>
+      <button onclick="limparPrompt()">Limpar</button>
+    </div>
+
+    <p id="saida" class="output"></p>
+
+    <script src="heroi.js"></script>
+    <script>
+      class Heroi {
+        constructor(nome, idade, tipo) {
+          this.nome = nome;
+          this.idade = idade;
+          this.tipo = tipo;
+        }
+
+        atacar() {
+          let descricaoAtaque;
+
+          switch (this.tipo) {
+            case "mago":
+              descricaoAtaque = " magia";
+              break;
+            case "guerreiro":
+              descricaoAtaque = " espada";
+              break;
+            case "monge":
+              descricaoAtaque = " artes marciais";
+              break;
+            case "ninja":
+              descricaoAtaque = " shuriken";
+              break;
+            default:
+              throw new Error("Tipo inválido");
+          }
+
+          return `O ${this.tipo} atacou usando ${descricaoAtaque}`;
+        }
+      }
+
+      function executarAtaque() {
+        let nome = document.getElementById("nome").value;
+        let idade = document.getElementById("idade").value;
+        let tipo = document.getElementById("tipo").value;
+
+        if (!nome || !idade || !tipo) {
+          alert("Por favor, preencha todos os campos.");
+          return;
+        }
+
+        try {
+          let heroi = new Heroi(nome, idade, tipo);
+          document.getElementById("saida").innerText = heroi.atacar();
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      function limparPrompt() {
+        document.getElementById("nome").value = "";
+        document.getElementById("idade").value = "";
+        document.getElementById("tipo").value = "";
+        document.getElementById("saida").innerText = "";
+      }
+    </script>
+  </body>
+</html>
